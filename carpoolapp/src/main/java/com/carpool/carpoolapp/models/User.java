@@ -1,19 +1,29 @@
 package com.carpool.carpoolapp.models;
 
+import com.carpool.carpoolapp.entities.Role;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.Builder;
 
 @Entity
 @Table(name = "users")
+@Builder
 public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name, email, password;
-    private String role; // DRIVER or RIDER
+	@Column(unique = true, nullable = false)
+	private String email;
+    private String name, password;
+    @Enumerated(EnumType.STRING)
+    private Role role; // DRIVER or RIDER
     
 	public Long getId() {
 		return id;
@@ -39,10 +49,10 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public String getRole() {
+	public Role getRole() {
 		return role;
 	}
-	public void setRole(String role) {
+	public void setRole(Role role) {
 		this.role = role;
 	}
     
